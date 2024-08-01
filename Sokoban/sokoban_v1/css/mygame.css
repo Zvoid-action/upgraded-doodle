@@ -1,0 +1,125 @@
+@charset "UTF-8";
+/**
+ *
+ * @authors ide
+ * @email   794958215@qq.com
+ * @date    2020-12-23 11:13:50
+ * @version $Id$
+ */
+      .title1{
+        color:white;
+        margin-top:50px;
+        margin-left:450px;
+        font-size: 100px;
+        }
+      .font1{
+        background-color:#8470FF;
+        border-radius: 10px;
+        border:5px solid #6A5ACD;
+        width: 500px;
+        height: 80px;
+        color: white;
+        line-height:80px;
+        text-align: center;
+        margin-top:20px;
+        margin-left:100px;
+        font-size: 50px;
+        cursor: pointer;
+      }
+      .font1:hover {
+      background: rgba(238, 82, 83, 1);
+      border:5px solid rgba(238, 82, 83, 1);
+      animation-delay: 3s;
+      }
+      .font2{font-family: "微软雅黑";font-size: 32px;color: white;font-weight: bold;text-align: center;line-height: 250px;margin-left: 10px;}
+      .font3{font-family: "微软雅黑";font-size: 20px;color: white;font-weight: bold;text-align: left;line-height: 200px;margin-left: 50px;}
+    .winfont{
+      color:white;
+      text-align: center;
+      font-size: 60px;
+    }
+    .startgame1,.startgame2{
+    text-align: center;
+    }
+    .startgame1{
+      color:#7FFFD4;
+      font-size: 30px;
+    }
+    .startgame2{
+      color:white;
+      font-size: 50px;
+    }
+    .blackarea{
+      opacity:0;
+      animation: beganfont 5s 1;
+    }
+      .snow{
+        background: #15181f;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        z-index: 30;
+        animation: bganimation 5s 1;
+       }
+    @keyframes bganimation {
+      0%{
+        width: 100px;
+        height: 100px;
+      }
+      50%{
+        width: 500px;
+        height: 500px;
+      }
+      100%{
+        width: 100px;
+        height: 100px;
+      }
+    }
+    @keyframes beganfont {
+      0%{
+        opacity:0;
+      }
+      50%{
+        opacity:1;
+      }
+      100%{
+        opacity:0;
+      }
+    }
+.hex{
+    transform: translate(-50%,-50%);
+    opacity:1;
+    font-size:40px;
+    color:#f1f2f6;
+}
+
+.hex,.hex::after,.hex::before{
+    position: absolute;
+    width:104px;
+    height:60px;
+    border-left:1px solid #70a1ff;
+    border-right:1px solid #70a1ff;
+    line-height: 60px;
+    text-align: center;
+    transition: 0.5s linear;
+}
+
+.hex::after,.hex::before{
+    content:"";
+    left:0;
+    top:0;
+}
+.hex::after{
+    transform:rotate(60deg);
+}
+
+.hex::before{
+    transform:rotate(-60deg);
+}
+
+/*.hex:hover,.hex:hover::after,.hex:hover::before{
+    width:154px;
+    height:110px;
+    line-height: 120px;
+}*/

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="Author" content=" ">
+    <title>Document</title>
+    <style type="text/css">
+        *{margin: 0;padding: 0;}
+        a{text-decoration: none;}
+        ul,li{list-style: none;}
+        body{font-size: 14px;font-family: "微软雅黑";background-color:#000;overflow: hidden;}
+      .title1{
+        color:white;
+        font-size: 100px;
+        text-align: center;
+        }
+        .title2{
+        color:white;
+        font-size: 30px;
+        text-align: center;
+        line-height: 90px;
+        }
+      .font1{
+        background-color:#8470FF;
+        border-radius: 10px;
+        border:5px solid #6A5ACD;
+        width: 500px;
+        height: 80px;
+        color: white;
+        line-height:80px;
+        text-align: center;
+        margin-top:20px;
+        margin-left:100px;
+        font-size: 50px;
+        cursor: pointer;
+      }
+      .font1:hover {
+      background: rgba(238, 82, 83, 1);
+      border:5px solid rgba(238, 82, 83, 1);
+      animation-delay: 3s;
+      }
+      .font2{font-family: "微软雅黑";font-size: 32px;color: white;font-weight: bold;text-align: center;line-height: 250px;margin-left: 10px;}
+      .font3{font-family: "微软雅黑";font-size: 20px;color: white;font-weight: bold;text-align: left;line-height: 200px;margin-left: 50px;}
+    .winfont{
+      color:white;
+      text-align: center;
+      font-size: 60px;
+    }
+    .startgame1,.startgame2{
+    text-align: center;
+    }
+    .startgame1{
+      color:#7FFFD4;
+      font-size: 30px;
+    }
+    .startgame2{
+      color:white;
+      font-size: 50px;
+    }
+    .blackarea{
+      opacity:0;
+      animation: beganfont 5s 1;
+    }
+      .snow{
+        background: #15181f;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        z-index: 50;
+        animation: bganimation 5s 1;
+       }
+    @keyframes bganimation {
+      0%{
+        width: 100px;
+        height: 100px;
+      }
+      50%{
+        width: 500px;
+        height: 500px;
+      }
+      100%{
+        width: 100px;
+        height: 100px;
+      }
+    }
+    @keyframes beganfont {
+      0%{
+        opacity:0;
+      }
+      50%{
+        opacity:1;
+      }
+      100%{
+        opacity:0;
+      }
+    }
+.hex{
+    transform: translate(-50%,-50%);
+    opacity:1;
+    font-size:40px;
+    color:#f1f2f6;
+}
+
+.hex,.hex::after,.hex::before{
+    position: absolute;
+    width:104px;
+    height:60px;
+    border-left:1px solid #70a1ff;
+    border-right:1px solid #70a1ff;
+    line-height: 60px;
+    text-align: center;
+    transition: 0.5s linear;
+}
+
+.hex::after,.hex::before{
+    content:"";
+    left:0;
+    top:0;
+}
+.hex::after{
+    transform:rotate(60deg);
+}
+
+.hex::before{
+    transform:rotate(-60deg);
+}
+
+.hex:hover,.hex:hover::after,.hex:hover::before{
+    width:154px;
+    height:110px;
+    line-height: 120px;
+}
+    </style>
+</head>
+
+  <body>
+  <script src="js/menu.js"></script>
+  <script src="js/mainmenu.js"></script>
+  <script src="js/teahgame.js"></script>
+  <script src="js/进入特效.js"></script>
+   <script type="text/javascript">
+   //主界面
+    setmainmenu();
+   document.onkeydown=function(e){menucatmove(e)}
+//建立游戏区
+    var playarea;
+    var thedoor;
+    var w;
+    var h;
+    var Map=Maparr();
+    var registrar=[];
+    var level=0;
+    var arr=Map[level];
+    var role;
+    var introduce;
+    var on;
+function moveobj(direct,obj,newValue){
+                arr[obj.row][obj.col]=0;
+                switch(direct){
+                case 37:
+                        obj.col=obj.col-1;
+                        break;
+                case 38:
+                        obj.row=obj.row-1;
+                        break;
+                case 39:
+                        obj.col=obj.col+1;
+                        break;
+                case 40:
+                        obj.row=obj.row+1;
+                        break;
+                            }
+                obj.style.left=obj.col*w+"px";
+                obj.style.top=obj.row*h+"px";
+                arr[obj.row][obj.col]=newValue;
+            }
+function move(e){//如果走到10，表示胜利
+            var key=e.keyCode;
+            var Allbox=document.querySelectorAll(".mybox");
+            if(key==37){
+                role.style.backgroundImage="url(image/人物（左）.png)";
+                if(arr[role.row][role.col-1]==0||arr[role.row][role.col-1]==3||arr[role.row][role.col-1]==9){
+                    moveobj(key,role,2);
+                    registrar.push(key);
+                    for(var i=0;i<Allbox.length;i++){
+                      Allbox[i].where.push([Allbox[i].row,Allbox[i].col]);
+                    }
+                    if(level==3){
+                      fly();
+                    }
+                }else if(arr[role.row][role.col-1]==7){
+                        if(arr[role.row][role.col-2]==0||arr[role.row][role.col-2]==3||arr[role.row][role.col-2]==10){
+                        var box=document.querySelector("#box"+role.row+(role.col-1));
+                            moveobj(key,box,7);
+
+                            box.id="box"+box.row+box.col;
+                            box.where.push([box.row,box.col]);
+
+                            moveobj(key,role,2);
+                            registrar.push(key);
+
+                            var success=isFinished();
+                            if(success===true){
+                            wintime();
+                            }
+                        }
+            }
+        }
+            if(key==38){
+                role.style.backgroundImage="url(image/人物（上）.png)";
+                if(arr[role.row-1][role.col]==0||arr[role.row-1][role.col]==3||arr[role.row-1][role.col]==9){
+                    moveobj(key,role,2);
+                    registrar.push(key);
+                    for(var i=0;i<Allbox.length;i++){
+                      Allbox[i].where.push([Allbox[i].row,Allbox[i].col]);
+                    }
+                    if(level==3){
+                      fly();
+                    }
+                }else if(arr[role.row-1][role.col]==7){
+                    if(arr[role.row-2][role.col]==0||arr[role.row-2][role.col]==3||arr[role.row-2][role.col]==10){
+                        var box=document.querySelector("#box"+(role.row-1)+role.col);
+                            moveobj(key,box,7);
+
+                            box.id="box"+box.row+box.col;
+                            box.where.push([box.row,box.col]);
+
+                            moveobj(key,role,2);
+                            registrar.push(key);
+
+                            var success=isFinished();
+                            if(success===true){
+                            wintime();
+                            }
+                        }
+            }
+        }
+            if(key==39){
+                role.style.backgroundImage="url(image/人物（右）.png)";
+                if(arr[role.row][role.col+1]==0||arr[role.row][role.col+1]==3||arr[role.row][role.col+1]==9){
+                    moveobj(key,role,2);
+                    registrar.push(key);
+                    for(var i=0;i<Allbox.length;i++){
+                      Allbox[i].where.push([Allbox[i].row,Allbox[i].col]);
+                    }
+                   if(level==3){
+                      fly();
+                    }
+                }else if(arr[role.row][role.col+1]==7){
+                       if(arr[role.row][role.col+2]==0||arr[role.row][role.col+2]==3||arr[role.row][role.col+2]==10){
+                        var box=document.querySelector("#box"+role.row+(role.col+1));
+                            moveobj(key,box,7);
+
+                            box.id="box"+box.row+box.col;
+                            box.where.push([box.row,box.col]);
+
+                            moveobj(key,role,2);
+                            registrar.push(key);
+
+                            var success=isFinished();
+                            if(success===true){
+                            wintime();
+                            }
+                        }
+            }
+        }
+            if(key==40){
+                role.style.backgroundImage="url(image/人物（下）.png)";
+                if(arr[role.row+1][role.col]==0||arr[role.row+1][role.col]==3||arr[role.row+1][role.col]==9){
+                    moveobj(key,role,2);
+                    registrar.push(key);
+                    for(var i=0;i<Allbox.length;i++){
+                      Allbox[i].where.push([Allbox[i].row,Allbox[i].col]);
+                    }
+                    if(level==3){
+                      fly();
+                    }
+                }else if(arr[role.row+1][role.col]==7){
+                        if(arr[role.row+2][role.col]==0||arr[role.row+2][role.col]==3||arr[role.row+2][role.col]==10){
+                        var box=document.querySelector("#box"+(role.row+1)+role.col);
+                            moveobj(key,box,7);
+
+                            box.id="box"+box.row+box.col;
+                            box.where.push([box.row,box.col]);
+
+                            moveobj(key,role,2);
+                            registrar.push(key);
+
+                            var success=isFinished();
+                            if(success===true){
+                                wintime();
+                            }
+                        }
+            }
+        }
+        if(key==90){
+              var end=registrar[registrar.length-1];
+              if(end==37||end==65){
+               role.style.backgroundImage="url(image/人物（左）.png)";
+                    moveobj(39,role,2);
+                    registrar.pop();
+                    for(var i=0;i<Allbox.length;i++){
+                var BOX=Allbox[i];
+                var END=BOX.where[BOX.where.length-2]
+                var ROW=END[0];
+                var COL=END[1];
+                arr[BOX.row][BOX.col]=0;
+                  BOX.row=ROW;
+                  BOX.col=COL;
+                  BOX.style.left=BOX.col*w+"px";
+                BOX.style.top=BOX.row*h+"px";
+                arr[BOX.row][BOX.col]=7;
+                  BOX.id="box"+ROW+COL;
+                  BOX.where.pop();
+                    }
+              }
+              if(end==38||end==87){
+            role.style.backgroundImage="url(image/人物（上）.png)";
+                    moveobj(40,role,2);
+                    registrar.pop();
+                    for(var i=0;i<Allbox.length;i++){
+                var BOX=Allbox[i];
+                var END=BOX.where[BOX.where.length-2]
+                var ROW=END[0];
+                var COL=END[1];
+                arr[BOX.row][BOX.col]=0;
+                  BOX.row=ROW;
+                  BOX.col=COL;
+                  BOX.style.left=BOX.col*w+"px";
+                BOX.style.top=BOX.row*h+"px";
+                arr[BOX.row][BOX.col]=7;
+                  BOX.id="box"+ROW+COL;
+                  BOX.where.pop();
+                    }
+              }
+              if(end==39||end==68){
+            role.style.backgroundImage="url(image/人物（右）.png)";
+                    moveobj(37,role,2);
+                    registrar.pop();
+                    for(var i=0;i<Allbox.length;i++){
+                var BOX=Allbox[i];
+                var END=BOX.where[BOX.where.length-2]
+                var ROW=END[0];
+                var COL=END[1];
+                arr[BOX.row][BOX.col]=0;
+                  BOX.row=ROW;
+                  BOX.col=COL;
+                  BOX.style.left=BOX.col*w+"px";
+                BOX.style.top=BOX.row*h+"px";
+                arr[BOX.row][BOX.col]=7;
+                  BOX.id="box"+ROW+COL;
+                  BOX.where.pop();
+                    }
+              }
+              if(end==40||end==83){
+            role.style.backgroundImage="url(image/人物（下）.png)";
+                    moveobj(38,role,2);
+                    registrar.pop();
+                    for(var i=0;i<Allbox.length;i++){
+                var BOX=Allbox[i];
+                var END=BOX.where[BOX.where.length-2]
+                var ROW=END[0];
+                var COL=END[1];
+                arr[BOX.row][BOX.col]=0;
+                  BOX.row=ROW;
+                  BOX.col=COL;
+                  BOX.style.left=BOX.col*w+"px";
+                BOX.style.top=BOX.row*h+"px";
+                arr[BOX.row][BOX.col]=7;
+                  BOX.id="box"+ROW+COL;
+                  BOX.where.pop();
+                    }
+              }
+            }
+            if(key==82){
+                playarea.innerHTML="";
+                registrar=[];
+                arr=Maparr()[level];
+                inputMap();
+                document.onkeydown=move;
+            }
+}
+function isFinished(){
+        var finish=true;
+        for(var i=0;i<arr.length;i++){
+            for(var j=0;j<arr[0].length;j++){
+                if(arr[i][j]==10){
+                    finish=false;
+                }
+            }
+        }
+        return finish;
+    }
+function wintime(){
+    document.onkeydown=null;
+    to();
+    level++;
+    playarea.innerHTML="";
+    registrar=[];
+    arr=Maparr()[level];
+    if(level==1){
+      beganthefristgame();
+      setTimeout(inputMap,3000);
+      document.onkeydown=move;
+    }
+    if(level==2){
+     beganthesecondgame();
+     setTimeout(inputMap,3000);
+     document.onkeydown=move;
+    }
+    if(level==3){
+    begantheThridgame();
+    setTimeout(inputMap,3000);
+    document.onkeydown=move;
+    }
+    if(level==4){
+    begantheforthgame();
+        setTimeout(inputMap,3000);
+        document.onkeydown=move;
+    }
+  if(level==5){
+    document.body.innerHTML="";
+    to();
+    winthegame();
+    setTimeout(mainmenu,3000);
+    document.onkeydown=null;
+  }
+
+}
+function clearsnow(){
+    var snow=document.querySelectorAll(".snow");
+    for(var i=0;i<snow.length;i++){
+        snow[i].style.width="0";
+        snow[i].style.height="0";
+    }
+}
+function fly(){
+    if(role.row==thedoor.row){
+      if(role.col==thedoor.col){
+        arr[role.row][role.col]=0;
+    role.col=4;
+    role.row=9;
+    role.style.left=role.col*w+"px";
+    role.style.top=role.row*h+"px";
+    arr[role.row][role.col]=2;
+      }
+    }
+}
+
+    </script>
+  </body>
+</html>
