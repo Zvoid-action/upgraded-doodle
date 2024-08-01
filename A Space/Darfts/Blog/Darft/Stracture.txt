@@ -1,0 +1,21 @@
+BLOG
+User
+	-Visitor
+		-View blogs
+		-Write comment
+	-Admin
+		-Login to dashborad
+		-manage users
+		-manage blogs
+		-manage comment
+Pages
+	-Home
+		-view blogs List
+	-Details
+		-view blog
+	-Login page 
+		-for dashbord
+	-Dashbord
+		-manage blogs
+		-write blog
+		-manage status
