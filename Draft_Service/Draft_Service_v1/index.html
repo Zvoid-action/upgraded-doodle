@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>C3 Canvas</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="stage" id="stage">
+        <div class="stage__content">
+          <div class="stage__top"></div>
+          <div class="stage__bottom__box">
+            <button class="btn btn--1"></button>
+            <button class="btn btn--2"></button>
+            <button class="btn btn--3"></button>
+            <button class="btn btn--4"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage edit" id="edit">
+        <div class="edit__content">
+          <div class="edit__form">
+            <a href="#design" class="edit__close">&times;</a>
+            <textarea
+              name="node_content"
+              class="node__input__content"
+              id="node_content"
+              maxlength="450"
+            ></textarea>
+            <input
+              type="text"
+              maxlength="25"
+              placeholder="relation 1"
+              class="node__input node__input--1"
+            />
+            <input
+              type="text"
+              maxlength="25"
+              placeholder="relation 2"
+              class="node__input node__input--2"
+            />
+            <input
+              type="text"
+              maxlength="25"
+              placeholder="relation 3"
+              class="node__input node__input--3"
+            />
+            <input
+              type="text"
+              maxlength="25"
+              placeholder="relation 4"
+              class="node__input node__input--4"
+            />
+          </div>
+        </div>
+      </div>
+      <canvas class="canvas" id="design"></canvas>
+      <div class="btn__box">
+        <a class="btn" id="deleteNode">X</a>
+        <a href="#edit" id="editNode" class="btn">E</a>
+      </div>
+      <a href="#stage" class="btn btn__mode active" id="presentation_btn">
+        Presentation mode
+      </a>
+      <a href="#design" class="btn btn__mode" id="design_btn">Design mode</a>
+    </div>
+    <script src="js/base.js"></script>
+  </body>
+</html>
